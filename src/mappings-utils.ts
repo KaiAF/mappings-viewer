@@ -33,5 +33,6 @@ async function parseMojangMappings(mappings_url: string): Promise<Array<MojangMa
 function isMojangMappingsCached(versionId: String): boolean {
   if (!fs.existsSync(`cache/${versionId}`) || !fs.existsSync(`cache/${versionId}/client_mappings.json`)) return false;
   // check if file was created within the past 6 hours
-  return checkCacheTime(fs.statSync(`cache/${versionId}/client_mappings.json`).birthtimeMs, 60 * 6);
+  // invert if statement
+  return !checkCacheTime(fs.statSync(`cache/${versionId}/client_mappings.json`).atimeMs, 60 * 6);
 }

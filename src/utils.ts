@@ -15,7 +15,7 @@ export async function getVersions(): Promise<Array<Version>> {
 export function getCachedVersions(): Array<Version> | null {
   if (!fs.existsSync('cache/versions.json')) return null;
   const stats = fs.statSync('cache/versions.json');
-  const expired = checkCacheTime(stats.birthtimeMs);
+  const expired = checkCacheTime(stats.atimeMs);
   if (expired) {
     fs.rmSync('cache/versions.json');
     console.log('Versions cache expired.');
@@ -43,6 +43,7 @@ export async function loadMappings(mappings: Mappings, version: Version): Promis
  * @returns if the file is cached
  */
 export function checkCacheTime(timeIn: number, minutesIn = 5): boolean {
-  const minutesAhead: number = new Date(timeIn).setMinutes(new Date(timeIn).getMinutes() + minutesIn);
-  return minutesAhead > new Date().getTime();
+  const date: Date = new Date(timeIn);
+  const minutesAhead: number = date.setMinutes(date.getMinutes() + minutesIn);
+  return minutesAhead < Date.now();
 }
