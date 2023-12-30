@@ -2,8 +2,10 @@ import * as fs from 'fs';
 
 import { Version } from "./types";
 
+const MOJANG_VERSION_MANIFEST = 'https://launchermeta.mojang.com/mc/game/version_manifest.json';
+
 export async function getVersions(): Promise<Array<Version>> {
-  const versionsManifest = await (await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')).json();
+  const versionsManifest = await (await fetch(MOJANG_VERSION_MANIFEST)).json();
   const versions: Array<Version> = versionsManifest.versions;
   fs.writeFileSync('cache/versions.json', JSON.stringify(versions));
   return versions;
