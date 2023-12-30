@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import { MojangMappings, Version } from './types';
-import { checkCacheTime } from './utils';
+import { isCacheExpired } from './utils';
 
 export async function loadMojangMappings(version: Version): Promise<Array<MojangMappings>> {
   const isCached: boolean = isMojangMappingsCached(version.id);
@@ -34,5 +34,5 @@ function isMojangMappingsCached(versionId: String): boolean {
   if (!fs.existsSync(`cache/${versionId}`) || !fs.existsSync(`cache/${versionId}/client_mappings.json`)) return false;
   // check if file was created within the past 6 hours
   // invert if statement
-  return !checkCacheTime(fs.statSync(`cache/${versionId}/client_mappings.json`).atimeMs, 60 * 6);
+  return !isCacheExpired(fs.statSync(`cache/${versionId}/client_mappings.json`).atimeMs, 60 * 6);
 }
