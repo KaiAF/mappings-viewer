@@ -32,7 +32,7 @@
   <script>
     function openMapping(obf) {
       if (!obf) return;
-      fetch('/api/getMapping?obf=' + obf).then(r => r.json()).then(b => {
+      fetch('/api/mapping/get?obf=' + obf).then(r => r.json()).then(b => {
         console.log(b);
       });
     }

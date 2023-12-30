@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import { MojangMappings, Version } from './types';
 import { getCachedVersions, getVersions, loadMappings } from './utils';
 // routers
-import getMappingsAPI from './routes/api/getMappings';
+import mappingAPI from './routes/api/mapping';
 
 // make sure some folders are created
 if (!fs.existsSync('cache')) fs.mkdirSync('cache', { recursive: true });
@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'src/front-end');
 app.use(express.static('src/public'));
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', getMappingsAPI);
+app.use('/api/mapping', mappingAPI);
 
 app.get('/', async function (req, res) {
   try {

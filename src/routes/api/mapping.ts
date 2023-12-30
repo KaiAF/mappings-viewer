@@ -1,7 +1,7 @@
 import express from 'express';
 const app = express.Router();
 
-app.get('/getMapping', async function (req, res) {
+app.get('/get', async function (req, res) {
   res.json({ ok: true });
 });
 
