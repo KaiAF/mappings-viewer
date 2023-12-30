@@ -1,0 +1,11 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  padding: 15px;
+  background-color: #222222;
+  color: white;
+  font-family: monospace;
+}

@@ -1,0 +1,15 @@
+# Mappings Viewer
+
+This is a website that is designed to view and search mappings for Minecraft's obfuscated jars.
+
+## Supported mappings
+
+- Mojmap
+
+### Not yet implemented mappigns
+
+- SRG
+- MCP
+- Yarn (and Intermediary)
+- Parchment
+- Quilt

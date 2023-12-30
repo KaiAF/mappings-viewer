@@ -1,0 +1,27 @@
+{
+  "name": "mappings-viewer",
+  "version": "1.0.0",
+  "description": "A website designed to view Minecraft's (and others) mappings for their jars",
+  "main": "src/server.ts",
+  "keywords": [
+    "Minecraft",
+    "Mappings"
+  ],
+  "author": "KaiAF",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "devStart": "nodemon --ignore cache src/server.ts"
+  },
+  "license": "LGPL-3.0-only",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "ts-node": "^10.9.2"
+  }
+}
