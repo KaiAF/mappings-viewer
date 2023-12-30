@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 
-import { Version } from "./types";
+import { Mappings, MojangMappings, Version } from "./types";
+import { loadMojangMappings } from './mappings-utils';
 
 const MOJANG_VERSION_MANIFEST = 'https://launchermeta.mojang.com/mc/game/version_manifest.json';
 
@@ -23,7 +24,25 @@ export function getCachedVersions(): Array<Version> | null {
   return JSON.parse(fs.readFileSync('cache/versions.json').toString());
 }
 
-export function checkCacheTime(timeIn: Number): boolean {
-  const fiveMinutesAhead: Number = new Date().setMinutes(new Date().getMinutes() + 5);
-  return fiveMinutesAhead < timeIn;
+export async function loadMappings(mappings: Mappings, version: Version): Promise<MojangMappings[] | null> {
+  switch (mappings) {
+    case 'mojang': {
+      return await loadMojangMappings(version);
+      break;
+    }
+    default:
+      break;
+  }
+
+  return null;
+}
+
+/**
+ * @param timeIn The time the file was created
+ * @param minutesIn the amount of minutes the file was created within
+ * @returns if the file is cached
+ */
+export function checkCacheTime(timeIn: number, minutesIn = 5): boolean {
+  const minutesAhead: number = new Date(timeIn).setMinutes(new Date(timeIn).getMinutes() + minutesIn);
+  return minutesAhead > new Date().getTime();
 }

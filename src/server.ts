@@ -3,9 +3,11 @@ dotenv.config();
 //
 import express from 'express';
 import * as fs from 'fs';
-
-import { Version } from './types';
-import { getCachedVersions, getVersions } from './utils';
+//
+import { MojangMappings, Version } from './types';
+import { getCachedVersions, getVersions, loadMappings } from './utils';
+// routers
+import getMappingsAPI from './routes/api/getMappings';
 
 // make sure some folders are created
 if (!fs.existsSync('cache')) fs.mkdirSync('cache', { recursive: true });
@@ -22,6 +24,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'src/front-end');
 app.use(express.static('src/public'));
 app.use(express.urlencoded({ extended: true }));
+app.use('/api', getMappingsAPI);
 
 app.get('/', async function (req, res) {
   try {
@@ -40,7 +43,12 @@ app.get('/mappings', async function (req, res) {
     const versions = getCachedVersions() || await getVersions();
     const version: Version = versions.filter(a => a.id == req.query.version)[0];
     if (!version) return res.status(404).render('errors/404', { message: 'Could not find supplied version' });
-    res.send(version);
+    const mappings: MojangMappings[] | null = await loadMappings('mojang', version);
+    if (!mappings) return res.status(404).render('errors/404', { message: 'Could not find mappings for this version' });
+    res.render('view-mappings', {
+      version,
+      mappings,
+    });
   } catch (e) {
     console.error(e);
     res.status(500).render('errors/500', { message: 'There was an unknown error that occured.' });

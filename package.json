@@ -1,6 +1,6 @@
 {
   "name": "mappings-viewer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A website designed to view Minecraft's (and others) mappings for their jars",
   "main": "src/server.ts",
   "keywords": [

@@ -5,3 +5,11 @@ export type Version = {
   time: string,
   releaseTime: string,
 };
+
+export type MojangMappings = {
+  obfuscated: string,
+  mapped: string;
+  type: string | 'class' | 'method' | 'field';
+};
+
+export type Mappings = 'mojang' | 'mcp';

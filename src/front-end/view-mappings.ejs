@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mappings Viewer | <%= version.id %></title>
+  <meta name="description" content="View the mappings for <%= version.id %> easily">
+  <%- include('partials/header'); %>
+</head>
+<body>
+  <h1><a href="/">Mappings Viewer</a></h1>
+  <div class="center" style="max-height: 100vh; overflow-y: scroll; overflow-x: hidden;">
+    <table>
+      <thead>
+        <tr>
+          <th>Obfuscated</th>
+          <th>Mojang</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% mappings.forEach(function (mapping) { if (mapping.type == 'class') { %>
+        <tr style="background: #000;" onclick="openMapping('<%= mapping.obfuscated %>')">
+          <td><%= mapping.obfuscated %></td>
+          <td><%= mapping.mapped %></td>
+          <td></td>
+        </tr>
+        <% } }) %>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    function openMapping(obf) {
+      if (!obf) return;
+      fetch('/api/getMapping?obf=' + obf).then(r => r.json()).then(b => {
+        console.log(b);
+      });
+    }
+  </script>
+</body>
+</html>

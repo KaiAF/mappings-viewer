@@ -9,3 +9,15 @@ body {
   color: white;
   font-family: monospace;
 }
+
+a {
+  color: white;
+  text-decoration: underline;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
